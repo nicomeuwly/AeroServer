@@ -30,7 +30,7 @@ Ce projet est basé sur le mod `Create` et l'addon `Create Aeronautics`, plus pl
 
 ## Télécharger les mods
 
-Le script utilise `manifest.json` pour récupérer les mods listés sur CurseForge.
+Le script utilise `manifest.json` pour récupérer les mods listés sur CurseForge et télécharge automatiquement l'installateur Neoforge si nécessaire.
 
 ```powershell
 python download_mods_from_manifest.py
@@ -39,7 +39,7 @@ python download_mods_from_manifest.py
 Le script compare automatiquement les versions des mods existants :
 - Si un mod existe déjà avec une version identique ou supérieure, il est ignoré.
 - Si la version du manifest est plus récente, le mod est mis à jour.
-- Utilise `--force` pour forcer le re-téléchargement de tous les mods :
+- Utilise `--force` pour forcer le re-téléchargement de tous les mods et de l'installateur :
 
 ```powershell
 python download_mods_from_manifest.py --force

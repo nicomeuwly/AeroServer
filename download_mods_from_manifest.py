@@ -66,15 +66,33 @@ def download_file(download_url, destination_path):
                     out_file.write(chunk)
 
 
-def extract_version_from_filename(filename):
-    # Pattern pour extraire la version : cherche des chiffres séparés par des points ou des tirets
-    match = re.search(r'(\d+(?:\.\d+)*(?:-\w+)?)', filename)
-    if match:
-        try:
-            return Version(match.group(1))
-        except InvalidVersion:
-            return None
-    return None
+def download_neoforge_installer(manifest, force=False):
+    minecraft = manifest.get("minecraft", {})
+    mod_loaders = minecraft.get("modLoaders", [])
+    neoforge_version = None
+    for loader in mod_loaders:
+        if loader.get("primary", False) and "neoforge" in loader.get("id", ""):
+            neoforge_version = loader["id"].replace("neoforge-", "")
+            break
+    if not neoforge_version:
+        print("Aucune version Neoforge trouvée dans le manifest.")
+        return
+
+    installer_name = f"neoforge-{neoforge_version}-installer.jar"
+    installer_path = os.path.join(os.getcwd(), installer_name)
+    if os.path.exists(installer_path) and not force:
+        print(f"Installateur Neoforge déjà présent : {installer_name}")
+        return
+
+    url = f"https://maven.neoforged.net/releases/net/neoforged/neoforge/{neoforge_version}/neoforge-{neoforge_version}-installer.jar"
+    print(f"Téléchargement de l'installateur Neoforge {neoforge_version}...", end=" ")
+    try:
+        download_file(url, installer_path)
+        print("OK")
+    except requests.RequestException as exc:
+        print(f"Échec: {exc}")
+        if os.path.exists(installer_path):
+            os.remove(installer_path)
 
 
 def main():
@@ -93,6 +111,9 @@ def main():
     if not files:
         print("Aucun fichier mod trouvé dans le manifest.")
         sys.exit(1)
+
+    # Télécharger l'installateur Neoforge si nécessaire
+    download_neoforge_installer(manifest, args.force)
 
     os.makedirs(args.mods_dir, exist_ok=True)
 

@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+
+# CurseForge / Neoforge install generated files
+libraries/
+mods/
+neoforge-*.jar
+
+# Server runtime files
+logs/
+crash-reports/
+world/
+DIM-1/
+DIM1/
+*.log
+*.lock
+*.dat
+*.dat_old
+*.json_old
+usercache.json
+banned-players.json
+banned-ips.json
+ops.json
+whitelist.json
+
+# Local server state
+overrides/
+eula.txt
+server-icon.png
+profileImage/
+defaultconfigs/

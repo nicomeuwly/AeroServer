@@ -1,0 +1,152 @@
+{
+  "minecraft": {
+    "version": "1.21.1",
+    "modLoaders": [
+      {
+        "id": "neoforge-21.1.228",
+        "primary": true
+      }
+    ]
+  },
+  "manifestType": "minecraftModpack",
+  "manifestVersion": 1,
+  "name": "Create Aeronautics",
+  "version": "",
+  "author": "",
+  "files": [
+    {
+      "projectID": 1102591,
+      "fileID": 7625579,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 676721,
+      "fileID": 8003941,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 829380,
+      "fileID": 7459750,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1414670,
+      "fileID": 7919366,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 485681,
+      "fileID": 6383261,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 417430,
+      "fileID": 7830651,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 997634,
+      "fileID": 7811411,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1312371,
+      "fileID": 8007005,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1374815,
+      "fileID": 7568020,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 237307,
+      "fileID": 5610814,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1251719,
+      "fileID": 6463890,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 509285,
+      "fileID": 7943181,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1357568,
+      "fileID": 7972057,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 864781,
+      "fileID": 8037481,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1519765,
+      "fileID": 7968280,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 840734,
+      "fileID": 6521990,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1072349,
+      "fileID": 7155413,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 466792,
+      "fileID": 6448012,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 906239,
+      "fileID": 7544005,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1386823,
+      "fileID": 7283478,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1237495,
+      "fileID": 6816581,
+      "required": true,
+      "isLocked": false
+    },
+    {
+      "projectID": 1522736,
+      "fileID": 8039499,
+      "required": true,
+      "isLocked": false
+    }
+  ],
+  "overrides": "overrides",
+  "image": "profileImage/639120354691921005.png"
+}

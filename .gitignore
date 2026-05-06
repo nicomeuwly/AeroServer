@@ -32,3 +32,8 @@ eula.txt
 server-icon.png
 profileImage/
 defaultconfigs/
+config/
+kubejs/
+usernamecache.json
+.mixin.out/
+.sable/

@@ -1,0 +1,22 @@
+#!/bin/bash
+# Déclenché automatiquement après chaque `git pull`.
+# Lance le script de téléchargement si manifest.json a été modifié.
+
+CHANGED=$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD 2>/dev/null)
+
+if ! echo "$CHANGED" | grep -q "^manifest\.json$"; then
+    exit 0
+fi
+
+echo "[AeroServer] manifest.json modifié — mise à jour des mods..."
+
+# Détecter le bon exécutable Python (venv Linux / venv Windows / système)
+if [ -f ".venv/bin/python3" ]; then
+    PYTHON=".venv/bin/python3"
+elif [ -f ".venv/Scripts/python.exe" ]; then
+    PYTHON=".venv/Scripts/python.exe"
+else
+    PYTHON="python3"
+fi
+
+"$PYTHON" download_mods_from_manifest.py

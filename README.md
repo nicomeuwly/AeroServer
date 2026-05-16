@@ -15,6 +15,7 @@ Basé sur le mod `Create` et l'addon `Create Aeronautics`, accompagnés de nombr
 | `start.sh` | Script de démarrage Linux avec setup automatique au premier lancement |
 | `stop.sh` | Script d'arrêt propre (sauvegarde du monde avant extinction) |
 | `aeroserver.service` | Service systemd pour démarrage/arrêt automatique sur Linux |
+| `hooks/post-merge` | Hook git : relance le téléchargement des mods après un `git pull` si `manifest.json` a changé |
 
 ---
 
@@ -39,22 +40,28 @@ Basé sur le mod `Create` et l'addon `Create Aeronautics`, accompagnés de nombr
    pip install -r requirements.txt
    ```
 
-3. Créer le fichier `.env` à la racine du projet :
+3. Activer le hook git (une seule fois, après le clone) :
+   ```powershell
+   git config core.hooksPath hooks
+   ```
+   Après ça, chaque `git pull` qui modifie `manifest.json` relancera automatiquement le téléchargement des mods.
+
+5. Créer le fichier `.env` à la racine du projet :
    ```env
    CURSEFORGE_API_KEY=ta_clé_api
    ```
 
-4. Télécharger les mods et l'installateur NeoForge :
+6. Télécharger les mods et l'installateur NeoForge :
    ```powershell
    python download_mods_from_manifest.py
    ```
 
-5. Lancer l'installateur NeoForge généré :
+7. Lancer l'installateur NeoForge généré :
    ```powershell
    java -jar neoforge-21.1.228-installer.jar --installServer
    ```
 
-6. Démarrer le serveur :
+8. Démarrer le serveur :
    ```powershell
    .\run.bat
    ```
@@ -99,6 +106,9 @@ sudo chown -R minecraft:minecraft /opt/aeroserver
 
 # Rendre les scripts exécutables
 sudo chmod +x /opt/aeroserver/start.sh /opt/aeroserver/stop.sh
+
+# Activer le hook git (une seule fois)
+cd /opt/aeroserver && sudo -u minecraft git config core.hooksPath hooks
 ```
 
 ### 2. Configurer la clé API

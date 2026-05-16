@@ -1,17 +1,25 @@
 # Fichier de service systemd pour AeroServer
 #
 # Installation :
-#   1. Ajuster SERVER_DIR ci-dessous avec le chemin absolu du serveur sur Linux
-#   2. Créer l'utilisateur système si nécessaire :
+#   1. Ajuster les chemins /opt/aeroserver si nécessaire
+#   2. Créer l'utilisateur système :
 #        sudo useradd -r -m -d /opt/aeroserver -s /bin/bash minecraft
-#   3. Copier ce fichier :
+#   3. Rendre les scripts exécutables :
+#        sudo chmod +x /opt/aeroserver/start.sh /opt/aeroserver/stop.sh
+#   4. Copier ce fichier :
 #        sudo cp aeroserver.service /etc/systemd/system/
-#   4. Recharger systemd et activer le service :
+#   5. Activer et démarrer :
 #        sudo systemctl daemon-reload
 #        sudo systemctl enable --now aeroserver
+#
+# Commandes utiles :
+#   sudo systemctl start aeroserver      # démarrer
+#   sudo systemctl stop aeroserver       # arrêter proprement (sauvegarde monde)
+#   journalctl -u aeroserver -f          # suivre les logs en direct
 
 [Unit]
 Description=AeroServer — Serveur Minecraft NeoForge 1.21.1
+# Démarrer après que le réseau soit disponible
 After=network-online.target
 Wants=network-online.target
 
@@ -20,20 +28,24 @@ Type=simple
 User=minecraft
 Group=minecraft
 
-# Adapter ce chemin au répertoire du serveur sur la machine Linux
 WorkingDirectory=/opt/aeroserver
 ExecStart=/opt/aeroserver/start.sh
 
-# Redémarrer automatiquement en cas de crash (pas si arrêt propre)
+# Arrêt propre : envoie "stop" au serveur via le FIFO,
+# ce qui déclenche la sauvegarde du monde avant l'extinction.
+ExecStop=/opt/aeroserver/stop.sh
+
+# Redémarrer automatiquement en cas de crash (pas si arrêt propre via stop)
 Restart=on-failure
 RestartSec=15
 
-# Laisser le temps au serveur de s'arrêter proprement avant SIGKILL
-TimeoutStopSec=60
+# Laisser 90s au serveur pour sauvegarder et s'arrêter avant SIGKILL
+TimeoutStopSec=90
 
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=aeroserver
 
 [Install]
+# Démarrer automatiquement au boot avec la cible multi-utilisateur
 WantedBy=multi-user.target

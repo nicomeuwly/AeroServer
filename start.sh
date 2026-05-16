@@ -4,7 +4,15 @@ set -euo pipefail
 SERVER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SERVER_DIR"
 
+STDIN_PIPE="$SERVER_DIR/.server_stdin"
+
 log() { echo "[AeroServer] $*"; }
+
+cleanup() {
+    exec 3>&- 2>/dev/null || true
+    rm -f "$STDIN_PIPE"
+}
+trap cleanup EXIT
 
 # ---------------------------------------------------------------------------
 # Étape 1 — Installation (premier démarrage uniquement)
@@ -54,7 +62,16 @@ if ! grep -q "^eula=true" eula.txt 2>/dev/null; then
 fi
 
 # ---------------------------------------------------------------------------
-# Lancement du serveur
+# Lancement du serveur via FIFO pour permettre un arrêt propre
+#
+# Le FIFO sert de stdin au serveur. stop.sh y écrit "stop" lors de l'extinction
+# du système, ce qui déclenche la sauvegarde et l'arrêt propre du serveur.
 # ---------------------------------------------------------------------------
+rm -f "$STDIN_PIPE"
+mkfifo "$STDIN_PIPE"
+
+# Ouvrir le FIFO en écriture dans ce shell pour éviter un EOF immédiat côté lecture
+exec 3>"$STDIN_PIPE"
+
 log "Démarrage du serveur..."
-exec bash run.sh
+bash run.sh < "$STDIN_PIPE"
